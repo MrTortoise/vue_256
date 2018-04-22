@@ -1,14 +1,15 @@
 <template>
-  <div
-    class="boardWrapper"
-  >
-    <div
-      class="r0c0"
-      @keyup.65="up" />{{ x }},{{ y }}<div class="r0c1" /><div class="r0c2" /><div class="r0c3" />
-    <div class="r1c0" /><div class="r1c1" /><div class="r1c2" /><div class="r1c3" />
-    <div class="r2c0" /><div class="r2c1" /><div class="r2c2" /><div class="r2c3" />
-    <div class="r3c0" /><div class="r3c1" /><div class="r3c2" /><div class="r3c3" />
+  <div class="game">
+    <div class="menu">
+      <button @click="start">start</button>
 
+    </div>
+    <div class="boardWrapper">
+      <div class="r0c0" >{{ board[0][0] }}</div><div class="r0c1" >{{ board[0][1] }}</div><div class="r0c2" >{{ board[0][2] }}</div><div class="r0c3" >{{ board[0][3] }}</div>
+      <div class="r1c0" >{{ board[1][0] }}</div><div class="r1c1" >{{ board[1][1] }}</div><div class="r1c2" >{{ board[1][2] }}</div><div class="r1c3" >{{ board[1][3] }}</div>
+      <div class="r2c0" >{{ board[2][0] }}</div><div class="r2c1" >{{ board[2][1] }}</div><div class="r2c2" >{{ board[2][2] }}</div><div class="r2c3" >{{ board[2][3] }}</div>
+      <div class="r3c0" >{{ board[3][0] }}</div><div class="r3c1" >{{ board[3][1] }}</div><div class="r3c2" >{{ board[3][2] }}</div><div class="r3c3" >{{ board[3][3] }}</div>
+    </div>
   </div>
 </template>
 
@@ -17,23 +18,61 @@ export default {
   name: 'Board',
   data () {
     return {
-      x: 0,
-      y: 0
+      board: {
+        0: {0: '', 1: '', 2: '', 3: ''},
+        1: {0: '', 1: '', 2: '', 3: ''},
+        2: {0: '', 1: '', 2: '', 3: ''},
+        3: {0: '', 1: '', 2: '', 3: ''}
+      }
     }
   },
   created: function () {
-    window.addEventListener('keyup', this.up)
+    window.addEventListener('keyup', this.handleKeys)
   },
   methods: {
-    up: function () {
-      console.log('key up event')
-      this.x++
+    start: function () {
+      const x = getIndex()
+      const y = getIndex()
+      this.board[y][x] = 2
+    },
+    handleKeys: function (args) {
+      const key = args.which
+      switch (key) {
+        case 38:
+          this.moveUp()
+          break
+        case 39:
+          this.moveRight()
+          break
+        case 40:
+          this.moveDown()
+          break
+        case 37:
+          this.moveLeft()
+      }
+    },
+    moveUp: function () {
+
+    },
+    moveRight: function () {
+
+    },
+    moveDown: function () {
+
+    },
+    moveLeft: function () {
+
     },
     click: function () {
       this.y++
     }
   }
 }
+
+function getIndex () {
+  return Math.floor(Math.random() * 4)
+}
+
 </script>
 
 <style scoped>
