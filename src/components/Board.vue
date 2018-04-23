@@ -23,7 +23,8 @@ export default {
         1: {0: '', 1: '', 2: '', 3: ''},
         2: {0: '', 1: '', 2: '', 3: ''},
         3: {0: '', 1: '', 2: '', 3: ''}
-      }
+      },
+      numbers: []
     }
   },
   created: function () {
@@ -34,6 +35,19 @@ export default {
       const x = getIndex()
       const y = getIndex()
       this.board[y][x] = 2
+      this.numbers.push({n: 2, x: x, y: y})
+    },
+    updateBoard: function () {
+      for (let x = 0; x < 4; x++) {
+        for (let y = 0; y < 4; y++) {
+          let numbers = this.numbers.filter(num => num.x === x && num.y === y)
+          if (numbers.length === 0) {
+            this.board[y][x] = ''
+          } else {
+            this.board[y][x] = numbers[0].n
+          }
+        }
+      }
     },
     handleKeys: function (args) {
       const key = args.which
@@ -52,16 +66,28 @@ export default {
       }
     },
     moveUp: function () {
+      console.log('up')
+      function isNotAtTop (number) {
+        return number.y !== 0
+      }
+      for (let i = 0; i < this.numbers.length; i++) {
+        const number = this.numbers[i]
+        if (isNotAtTop(number)) {
+          // let numbersAbove = numbers.filter(n => n.x == number.x && n.y < number.y);
+          number.y = 0
+        }
+      }
 
+      this.updateBoard()
     },
     moveRight: function () {
-
+      console.log('right')
     },
     moveDown: function () {
-
+      console.log('down')
     },
     moveLeft: function () {
-
+      console.log('left')
     },
     click: function () {
       this.y++
