@@ -17,86 +17,37 @@
 export default {
   name: 'Board',
   data () {
-    return {
-      board: {
-        0: {0: '', 1: '', 2: '', 3: ''},
-        1: {0: '', 1: '', 2: '', 3: ''},
-        2: {0: '', 1: '', 2: '', 3: ''},
-        3: {0: '', 1: '', 2: '', 3: ''}
-      },
-      numbers: []
+    return {}
+  },
+  computed: {
+    board () {
+      return this.$store.state.board
     }
   },
   created: function () {
     window.addEventListener('keyup', this.handleKeys)
   },
   methods: {
-    start: function () {
-      const x = getIndex()
-      const y = getIndex()
-      this.board[y][x] = 2
-      this.numbers.push({n: 2, x: x, y: y})
-    },
-    updateBoard: function () {
-      for (let x = 0; x < 4; x++) {
-        for (let y = 0; y < 4; y++) {
-          let numbers = this.numbers.filter(num => num.x === x && num.y === y)
-          if (numbers.length === 0) {
-            this.board[y][x] = ''
-          } else {
-            this.board[y][x] = numbers[0].n
-          }
-        }
-      }
+    start () {
+      this.$store.commit('start')
     },
     handleKeys: function (args) {
       const key = args.which
       switch (key) {
         case 38:
-          this.moveUp()
+          this.$store.commit('moveUp')
           break
         case 39:
-          this.moveRight()
+          this.$store.commit('moveRight')
           break
         case 40:
-          this.moveDown()
+          this.$store.commit('moveDown')
           break
         case 37:
-          this.moveLeft()
+          this.$store.commit('moveLeft')
       }
-    },
-    moveUp: function () {
-      console.log('up')
-      function isNotAtTop (number) {
-        return number.y !== 0
-      }
-      for (let i = 0; i < this.numbers.length; i++) {
-        const number = this.numbers[i]
-        if (isNotAtTop(number)) {
-          // let numbersAbove = numbers.filter(n => n.x == number.x && n.y < number.y);
-          number.y = 0
-        }
-      }
-
-      this.updateBoard()
-    },
-    moveRight: function () {
-      console.log('right')
-    },
-    moveDown: function () {
-      console.log('down')
-    },
-    moveLeft: function () {
-      console.log('left')
-    },
-    click: function () {
-      this.y++
     }
   }
-}
-
-function getIndex () {
-  return Math.floor(Math.random() * 4)
 }
 
 </script>
