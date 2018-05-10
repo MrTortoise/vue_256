@@ -3,8 +3,7 @@ import Vuex from 'vuex'
 
 import gameState, {start} from '@/game/gameState.js'
 
-import moves from '@/game/moves.js'
-const {moveUp} = moves
+import {moveUp} from '@/game/moves.js'
 
 Vue.use(Vuex)
 

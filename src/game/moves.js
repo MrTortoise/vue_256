@@ -1,6 +1,4 @@
 export const moveUp = function (state) {
-  // console.log('up')
-
   function numberAtTop (number) {
     return number.y === 0
   }
@@ -21,15 +19,11 @@ export const moveUp = function (state) {
   const numbers = state.numbers.sort(compareY)
   const newNumbers = []
   numbers.forEach(number => {
-    // console.log(`processing number ${JSON.stringify(number)}; newNumbers: ${JSON.stringify(newNumbers)} `)
     const newNumber = moveNumberUp(number, newNumbers)
 
     if (newNumber.y !== number.y) {
-      // console.log(`moved number is not on same row ${JSON.stringify(newNumber)}`)
       number.y = newNumber.y
     }
-
-    // console.log(`new number is ${JSON.stringify(number)}`)
 
     const numberAbove = newNumbers.find(n => n.y === number.y - 1)
     if (numberAbove && numberAbove.n === number.n) {
