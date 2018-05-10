@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Board from './Board.vue'
+import Board from '@/game/Board.vue'
 
 export default {
   name: 'Hello256',
