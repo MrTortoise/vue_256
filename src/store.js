@@ -3,39 +3,43 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-var store = new Vuex.Store({
-  state: {
-    numbers: [],
-    board: {
-      0: {0: '', 1: '', 2: '', 3: ''},
-      1: {0: '', 1: '', 2: '', 3: ''},
-      2: {0: '', 1: '', 2: '', 3: ''},
-      3: {0: '', 1: '', 2: '', 3: ''}
-    }
-  },
-  mutations: {
-    start (state) {
-      const x = getIndex()
-      const y = getIndex()
-      state.board[y][x] = 2
-      state.numbers.push({n: 2, x: x, y: y})
-    },
-    moveUp: function (state) {
-      console.log('up')
-      function isNotAtTop (number) {
-        return number.y !== 0
-      }
-      for (let i = 0; i < state.numbers.length; i++) {
-        const number = state.numbers[i]
-        if (isNotAtTop(number)) {
-          // let numbersAbove = numbers.filter(n => n.x == number.x && n.y < number.y);
-          number.y = 0
-        }
-      }
-
-      updateBoard(state)
-    }
+const state = {
+  numbers: [],
+  board: {
+    0: {0: '', 1: '', 2: '', 3: ''},
+    1: {0: '', 1: '', 2: '', 3: ''},
+    2: {0: '', 1: '', 2: '', 3: ''},
+    3: {0: '', 1: '', 2: '', 3: ''}
   }
+}
+
+export const mutations = {
+  start (state) {
+    const x = getIndex()
+    const y = getIndex()
+    state.board[y][x] = 2
+    state.numbers.push({n: 2, x: x, y: y})
+  },
+  moveUp: function (state) {
+    console.log('up')
+    function isNotAtTop (number) {
+      return number.y !== 0
+    }
+    for (let i = 0; i < state.numbers.length; i++) {
+      const number = state.numbers[i]
+      if (isNotAtTop(number)) {
+        // let numbersAbove = numbers.filter(n => n.x == number.x && n.y < number.y);
+        number.y = 0
+      }
+    }
+
+    updateBoard(state)
+  }
+}
+
+var store = new Vuex.Store({
+  state,
+  mutations
 })
 
 function updateBoard (state) {
