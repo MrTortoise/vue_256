@@ -24,4 +24,15 @@ describe('moveUp will', () => {
     moveUp(state)
     expect(state.board[0][0]).toEqual(4)
   })
+
+  it('should end with a 2 above a 4 in the same column', () => {
+    state.numbers = [
+      {n: 2, x: 0, y: 1},
+      {n: 4, x: 0, y: 2}
+    ]
+
+    moveUp(state)
+    expect(state.board[0][0]).toEqual(2)
+    expect(state.board[1][0]).toEqual(4)
+  })
 })
