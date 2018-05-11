@@ -16,7 +16,7 @@ export const moveUp = function (state) {
     return moveNumberUp(num, numbers)
   }
 
-  const numbers = state.numbers.sort(compareY)
+  const numbers = state.numbers.sort(compareXY)
   const newNumbers = []
   numbers.forEach(number => {
     const newNumber = moveNumberUp(number, newNumbers)
@@ -25,7 +25,7 @@ export const moveUp = function (state) {
       number.y = newNumber.y
     }
 
-    const numberAbove = newNumbers.find(n => n.y === number.y - 1)
+    const numberAbove = newNumbers.find(n => n.y === number.y - 1 && n.x === number.x)
     if (numberAbove && numberAbove.n === number.n) {
       numberAbove.n = numberAbove.n * 2
     } else {
@@ -34,25 +34,12 @@ export const moveUp = function (state) {
   })
 
   state.numbers = newNumbers
-
-  updateBoard(state)
 }
 
-function compareY (a, b) {
+function compareXY (a, b) {
+  if (a.x < b.x) return -1
+  if (a.x > b.x) return 1
   if (a.y < b.y) return -1
   if (a.y > b.y) return 1
   return 0
-}
-
-function updateBoard (state) {
-  for (let x = 0; x < 4; x++) {
-    for (let y = 0; y < 4; y++) {
-      let numbers = state.numbers.filter(num => num.x === x && num.y === y)
-      if (numbers.length === 0) {
-        state.board[y][x] = ''
-      } else {
-        state.board[y][x] = numbers[0].n
-      }
-    }
-  }
 }

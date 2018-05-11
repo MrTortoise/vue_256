@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import gameState, {start} from '@/game/gameState.js'
+import gameState, {start, board} from '@/game/gameState.js'
 
 import {moveUp} from '@/game/moves.js'
 
@@ -14,7 +14,10 @@ export const mutations = {
 
 var store = new Vuex.Store({
   state: gameState,
-  mutations
+  mutations,
+  getters: {
+    board: board
+  }
 })
 
 export default store
