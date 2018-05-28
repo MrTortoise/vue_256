@@ -8,6 +8,10 @@ export default {
   }
 }
 
+export const setBoard = (state, newBoard) => {
+  state.board = newBoard
+}
+
 export const start = (state) => {
   const x = getIndex()
   const y = getIndex()
@@ -17,7 +21,7 @@ export const start = (state) => {
   state.numbers.push({n: 2, x: x, y: y})
 }
 
-export const board = (state) => {
+export const updateBoard = state => {
   for (let x = 0; x < 4; x++) {
     for (let y = 0; y < 4; y++) {
       let numbers = state.numbers.filter(num => num.x === x && num.y === y)

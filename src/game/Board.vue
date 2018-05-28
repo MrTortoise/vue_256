@@ -21,6 +21,7 @@ export default {
   },
   computed: {
     board () {
+      console.info(`board computed: ${JSON.stringify(this.$store.state.board)}`)
       return this.$store.state.board
     }
   },
@@ -35,7 +36,8 @@ export default {
       const key = args.which
       switch (key) {
         case 38:
-          this.$store.commit('moveUp')
+          console.debug('board move up')
+          this.$store.dispatch('moveBoardUp')
           break
         case 39:
           this.$store.commit('moveRight')
