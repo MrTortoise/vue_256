@@ -27,8 +27,6 @@ export const updateBoard = ({state, commit}, numbers) => {
 }
 
 export const moveUp = function (state) {
-  console.log(`move up called: ${JSON.stringify(state)}`)
-
   function moveNumberUp (number, numbers) {
     if (numberAtTop(number)) return number
 
@@ -41,23 +39,18 @@ export const moveUp = function (state) {
   const numbers = state.numbers.sort(compareXY)
   const newNumbers = []
 
-  while (numbers.length > 0) {
-    const number = numbers.pop()
+  numbers.forEach(number => {
     const newNumber = moveNumberUp(number, newNumbers)
 
-    if (newNumber.y !== number.y) {
-      number.y = newNumber.y
-    }
+    const numberAbove = newNumbers.find(n => n.y === newNumber.y - 1 && n.x === newNumber.x)
 
-    const numberAbove = newNumbers.find(n => n.y === number.y - 1 && n.x === number.x)
-    if (numberAbove && numberAbove.n === number.n) {
+    if (numberAbove && numberAbove.n === newNumber.n) {
       numberAbove.n = numberAbove.n * 2
     } else {
-      newNumbers.push(number)
+      newNumbers.push(newNumber)
     }
-  }
+  })
 
-  console.log(`move up mutation, numbers: ${JSON.stringify(newNumbers)}`)
   return newNumbers
 }
 
