@@ -7,13 +7,27 @@ function numberAboveNumber (number, numbers) {
   return numbers.some(n => n.x === number.x && n.y === number.y - 1)
 }
 
-export const moveBoardUp = function ({commit}) {
-  commit('moveUp')
-  commit('updateBoard')
+export const moveBoardUp = function ({commit, dispatch, state}) {
+  const numbers = moveUp(state)
+  commit('updateNumbers', numbers)
+  dispatch('updateBoard', numbers)
+}
+
+export const updateBoard = ({state, commit}, numbers) => {
+  for (let x = 0; x < 4; x++) {
+    for (let y = 0; y < 4; y++) {
+      let newNumbers = numbers.filter(num => num.x === x && num.y === y)
+      if (newNumbers.length === 0) {
+        commit('updateCell', {y, x, n: ''})
+      } else {
+        commit('updateCell', {y, x, n: newNumbers[0].n})
+      }
+    }
+  }
 }
 
 export const moveUp = function (state) {
-  console.debug(`move up called: ${JSON.stringify(state)}`)
+  console.log(`move up called: ${JSON.stringify(state)}`)
 
   function moveNumberUp (number, numbers) {
     if (numberAtTop(number)) return number
@@ -43,10 +57,8 @@ export const moveUp = function (state) {
     }
   }
 
-  newNumbers.forEach(number => {
-    state.numbers.push(number)
-  })
-  console.log(`move up mutation, numbers: ${JSON.stringify(state.numbers)}`)
+  console.log(`move up mutation, numbers: ${JSON.stringify(newNumbers)}`)
+  return newNumbers
 }
 
 function compareXY (a, b) {

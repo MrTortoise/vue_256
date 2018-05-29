@@ -21,17 +21,13 @@ export const start = (state) => {
   state.numbers.push({n: 2, x: x, y: y})
 }
 
-export const updateBoard = state => {
-  for (let x = 0; x < 4; x++) {
-    for (let y = 0; y < 4; y++) {
-      let numbers = state.numbers.filter(num => num.x === x && num.y === y)
-      if (numbers.length === 0) {
-        state.board[y][x] = ''
-      } else {
-        state.board[y][x] = numbers[0].n
-      }
-    }
-  }
+export const updateCell = (state, {x, y, n}) => {
+  state.board[y][x] = n
+}
+
+export const updateNumbers = (state, numbers) => {
+  console.log(`numbers: ${JSON.stringify(numbers)}`)
+  state.numbers = numbers
 }
 
 function getIndex () {
