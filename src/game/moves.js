@@ -11,19 +11,27 @@ export const moveBoardUp = function ({commit, dispatch, state}) {
   const numbers = moveUp(state)
   commit('updateNumbers', numbers)
   dispatch('updateBoard', numbers)
+    .then(response => {
+      commit('start')
+    }, reason => {
+      console.log(reason)
+    })
 }
 
 export const updateBoard = ({state, commit}, numbers) => {
-  for (let x = 0; x < 4; x++) {
-    for (let y = 0; y < 4; y++) {
-      let newNumbers = numbers.filter(num => num.x === x && num.y === y)
-      if (newNumbers.length === 0) {
-        commit('updateCell', {y, x, n: ''})
-      } else {
-        commit('updateCell', {y, x, n: newNumbers[0].n})
+  return new Promise((resolve, reject) => {
+    for (let x = 0; x < 4; x++) {
+      for (let y = 0; y < 4; y++) {
+        let newNumbers = numbers.filter(num => num.x === x && num.y === y)
+        if (newNumbers.length === 0) {
+          commit('updateCell', {y, x, n: ''})
+        } else {
+          commit('updateCell', {y, x, n: newNumbers[0].n})
+        }
       }
     }
-  }
+    resolve()
+  })
 }
 
 export const moveUp = function (state) {
